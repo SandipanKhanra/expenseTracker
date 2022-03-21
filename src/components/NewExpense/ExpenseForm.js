@@ -19,6 +19,7 @@ const ExpenseForm = (props) => {
 		// 	...userInput,
 		// 	enteredTitle: event.target.value,
 		// });
+		// This function approach should be followed if present state depends on previous state
 		// setUserInput((prevInput) => {
 		// 	return { ...prevInput, enteredTitle: event.target.value };
 		// });
@@ -79,7 +80,7 @@ const ExpenseForm = (props) => {
 					<label>Date</label>
 					<input
 						type="date"
-						min="2017-01-01"
+						min="2019-01-01"
 						max="2022-12-31"
 						value={enteredDate} //This used to reset the value after form submission
 						onChange={dateChangeHandler}
@@ -87,7 +88,10 @@ const ExpenseForm = (props) => {
 				</div>
 			</div>
 			<div className="new-expense__actions">
-				<button type="submit">Add Expense</button>
+				<button type="button" onClick={props.onCancel}>
+					Cancel
+				</button>
+				<button type="submit">Add Expenss</button>
 			</div>
 		</form>
 	);

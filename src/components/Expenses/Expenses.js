@@ -1,6 +1,8 @@
-import ExpenseItem from "./ExpenseItem";
 import Card from "../UI/Card";
 import "./Expenses.css";
+import ExpensesFilter from "./ExpensesFilter";
+import { useState } from "react";
+import ExpensesList from "./ExpensesList";
 
 function Expenses(props) {
 	/* This is hard coded */
@@ -24,16 +26,33 @@ function Expenses(props) {
 	/** Here we listing expense items dynamically Using built-in Array.map()
 			function we are transforming each expense object in the props.item Array
 			into an ExpenseItem object */
+	const [filteredYear, setFilteredYear] = useState("2022");
+
+	const filterChangeHandler = (selectedYear) => {
+		setFilteredYear(selectedYear);
+	};
+
+	// Filtering the expenses based on the selected year in dropdown menu
+	const filteredExpenses = props.items.filter((expense) => {
+		return expense.date.getFullYear().toString() === filteredYear;
+	});
+
 	return (
-		<Card className="expenses">
-			{props.items.map((expense) => (
-				<ExpenseItem
-					title={expense.title}
-					amount={expense.amount}
-					date={expense.date}
+		<div>
+			<Card className="expenses">
+				<ExpensesFilter
+					selectd={filteredYear}
+					onChangeFilter={filterChangeHandler}
 				/>
-			))}
-		</Card>
+				{/* {props.items.map((expense) => (
+					<ExpenseItem
+						title={expense.title}
+						amount={expense.amount}
+						date={expense.date}
+					/> */}
+				<ExpensesList items={filteredExpenses} />
+			</Card>
+		</div>
 	);
 }
 
